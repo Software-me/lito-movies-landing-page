@@ -1,28 +1,48 @@
 # Lito Movies Landing Page
 
-A responsive movie-inspired landing page built with HTML, CSS, and JavaScript, featuring an
-interactive poster carousel, synced background transitions, and trailer playback.
+**Live site:** [https://software-me.github.io/lito-movies-landing-page/](https://software-me.github.io/lito-movies-landing-page/)
 
-## Quick Start
+## About this project
 
-1. Install dependencies:
-   - `npm install`
-2. Start a local server:
-   - `npm start`
-3. Open the local URL printed by `serve` in your browser.
+This is a **static, responsive “streaming-style” landing page** for **LitoStreaming**. It presents featured titles with title art, metadata, short descriptions, and actions (Watch, My List, Watch Trailer). A **Materialize carousel** shows poster thumbnails; choosing a poster updates the **hero background** and **detail panel** for that title. **Per-title dimming** keeps backgrounds readable. The graduation slide keeps a **personal message**; other titles use the placeholder line **“LitoStreaming coming soon!”** until real copy is added.
 
-## Scripts
+There is **no backend**—everything runs in the browser (HTML, CSS, client-side JavaScript).
 
-- `npm start`: serve the project locally.
-- `npm run lint`: lint JavaScript files in `js/`.
-- `npm run lint:fix`: auto-fix lint issues where possible.
-- `npm run format`: check formatting for HTML/CSS/JS/JSON/Markdown files.
-- `npm run format:write`: apply formatting changes.
+## Quick start (local)
 
-## Project Structure
+1. Install dependencies: `npm install`
+2. Start a local server: `npm start`
+3. Open the URL shown in the terminal (usually `http://localhost:3000`).
 
-- `index.html`: page markup and layout.
-- `css/main.css`: styling and responsive behavior.
-- `js/script.js`: carousel/background and trailer interactions.
-- `images/`: title art, posters, and icons.
-- `assets/`: local video files.
+## npm scripts
+
+- **`npm start`** — Serves the project locally with `serve`.
+- **`npm run lint`** — ESLint on `js/**/*.js`.
+- **`npm run lint:fix`** — ESLint with auto-fix where possible.
+- **`npm run format`** — Prettier check for HTML, CSS, JS, JSON, Markdown.
+- **`npm run format:write`** — Apply Prettier formatting.
+
+## Project files and what they do
+
+| Path                                           | Role                                                                                                                                                                                                                                                                         |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`index.html`**                               | Page structure: header/nav, hero banner, one **content block per title** (classes like `the-ritual`, `graduation`), carousel markup with `data-bg` / `data-title` / `data-dim`, trailer overlay with `<video>`, and script tags for jQuery, Materialize, and `js/script.js`. |
+| **`css/main.css`**                             | All **layout and visuals**: fonts, header, hero overlay, active content panels, **slim carousel** sizing, responsive breakpoints, trailer modal, social icons. Uses a CSS variable for **banner overlay opacity** so JavaScript can tune dimming per movie.                  |
+| **`js/script.js`**                             | **Behavior**: toggles the trailer modal (`toggleVideo`), swaps hero background and active content (`changeBg`), reads carousel **`dataset`** attributes, wires click handlers for trailer and carousel items on `DOMContentLoaded`.                                          |
+| **`assets/`**                                  | **Video** used by the trailer (e.g. graduation ceremony footage).                                                                                                                                                                                                            |
+| **`images/`**                                  | **Title PNGs**, UI assets like **close** icon, and nested **`images/movies/`** for posters and background images referenced by CSS and `changeBg`.                                                                                                                           |
+| **`font-awesome/`**                            | **Local Font Awesome 4** bundle (CSS + fonts) for icons used in the header, buttons, and social links.                                                                                                                                                                       |
+| **`package.json`**                             | npm **metadata** and **scripts** (`start`, `lint`, `format`).                                                                                                                                                                                                                |
+| **`package-lock.json`**                        | Locks dependency versions for reproducible installs.                                                                                                                                                                                                                         |
+| **`eslint.config.js`**                         | **ESLint** flat config for browser JS (globals for browser, jQuery `$`, Materialize `M`).                                                                                                                                                                                    |
+| **`.prettierrc.json`** / **`.prettierignore`** | **Prettier** formatting defaults and ignored paths (e.g. `node_modules`, vendored `font-awesome`).                                                                                                                                                                           |
+| **`.gitignore`**                               | Ignores `node_modules` and OS junk files.                                                                                                                                                                                                                                    |
+
+### Libraries loaded from CDN (not in repo)
+
+- **jQuery** — Required by Materialize’s carousel initializer in `index.html`.
+- **Materialize** — CSS + JS for the **3D carousel** component.
+
+## Repository
+
+Source: [https://github.com/Software-me/lito-movies-landing-page](https://github.com/Software-me/lito-movies-landing-page)
