@@ -1,0 +1,22 @@
+{
+  "name": "movie-website-landing-page",
+  "version": "1.0.0",
+  "description": "Static movie landing page built with HTML, CSS, and JavaScript.",
+  "scripts": {
+    "start": "serve .",
+    "lint": "eslint js/**/*.js",
+    "lint:fix": "eslint js/**/*.js --fix",
+    "format": "prettier --check \"**/*.{html,css,js,json,md}\"",
+    "format:write": "prettier --write \"**/*.{html,css,js,json,md}\""
+  },
+  "keywords": [],
+  "author": "Lito",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "eslint": "^10.3.0",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3",
+    "serve": "^14.2.6"
+  }
+}
