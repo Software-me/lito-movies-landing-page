@@ -2,6 +2,8 @@
 
 **Live site:** [https://software-me.github.io/lito-movies-landing-page/](https://software-me.github.io/lito-movies-landing-page/)
 
+If the live page on your phone still looks old after a deploy, Safari often keeps a cached HTML copy. Try **Settings → Safari → Clear History and Website Data**, or open the site in a **Private** tab. You can also append a dummy query once to bypass cache, e.g. `...github.io/lito-movies-landing-page/?v=2`.
+
 ## About this project
 
 This is a **static, responsive “streaming-style” landing page** for **LitoStreaming**. It presents featured titles with title art, metadata, short descriptions, and actions (Watch, My List, Watch Trailer). A **Materialize carousel** shows poster thumbnails; choosing a poster updates the **hero background** and **detail panel** for that title. **Per-title dimming** keeps backgrounds readable. The graduation slide keeps a **personal message**; other titles use the placeholder line **“LitoStreaming coming soon!”** until real copy is added.
