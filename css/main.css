@@ -95,10 +95,10 @@ header {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  padding: 0 100px;
+  padding: 130px 100px 80px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   background: url('../images/movies/bg-The Ritual.jpg') no-repeat;
   background-size: cover;
   background-position: center;
@@ -136,7 +136,12 @@ header {
 }
 
 .movie-title {
-  max-width: 250px;
+  display: block;
+  width: 250px;
+  max-width: 100%;
+  height: 118px;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .banner .content h4 {
@@ -345,7 +350,7 @@ header {
   }
 
   .banner {
-    padding: 100px 50px;
+    padding: 120px 50px 60px;
   }
 
   .banner .content .play {
@@ -383,7 +388,8 @@ header {
   }
 
   .movie-title {
-    max-width: 150px;
+    width: 150px;
+    height: 72px;
   }
 
   .banner .content h4 {
