@@ -402,26 +402,6 @@ header {
   outline: none;
 }
 
-.volume-toggle {
-  position: absolute;
-  right: 84px;
-  top: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  background: rgba(0, 0, 0, 0.45);
-  color: #ffffff;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.volume-toggle i {
-  font-size: 20px;
-}
-
 .close {
   position: absolute;
   top: 30px;
