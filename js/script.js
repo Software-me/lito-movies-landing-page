@@ -4,6 +4,8 @@ function toggleVideo() {
   if (trailer.classList.contains('active')) {
     video.pause();
   } else {
+    video.muted = false;
+    video.volume = 1;
     video.play().catch(() => {
       // Autoplay can be blocked by browser settings.
     });
