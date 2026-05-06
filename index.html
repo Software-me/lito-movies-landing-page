@@ -41,8 +41,13 @@ May 4th, 2025 Saturday 11:30 PM.
         <li><a href="#">My List</a></li>
       </ul>
       <div class="search">
-        <input type="text" placeholder="Search" />
-        <i class="fa fa-search" aria-hidden="true"></i>
+        <input
+          type="text"
+          placeholder="Search"
+          aria-label="Search titles, genres, and keywords"
+        />
+        <i class="fa fa-search" aria-hidden="true" role="button" tabindex="0"></i>
+        <p class="search-status" aria-live="polite"></p>
       </div>
     </header>
     <div class="banner">

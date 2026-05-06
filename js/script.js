@@ -10,6 +10,13 @@ function toggleVideo() {
   }
   trailer.classList.toggle('active');
 }
+
+function openTrailerIfClosed() {
+  const trailer = document.querySelector('.trailer');
+  if (!trailer.classList.contains('active')) {
+    toggleVideo();
+  }
+}
 // change the background images and movie content text
 function changeBg(bg, title, dim = '0.6') {
   const banner = document.querySelector('.banner');
@@ -27,6 +34,10 @@ function changeBg(bg, title, dim = '0.6') {
   });
 }
 
+function normalizeSearchTerm(value) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const playButtons = document.querySelectorAll('[data-action="toggle-trailer"]');
   playButtons.forEach((button) => {
@@ -37,6 +48,78 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const carouselItems = document.querySelectorAll('.carousel-item[data-bg][data-title]');
+  const searchInput = document.querySelector('.search input');
+  const searchIcon = document.querySelector('.search .fa-search');
+  const searchStatus = document.querySelector('.search-status');
+
+  const keywordAliases = {
+    'the-ritual': ['ritual', 'romance', 'date', 'couple'],
+    'the-bagman': ['bagman', 'action', 'thriller', 'killer'],
+    'flight-risk': ['flight risk', 'flight', 'horror', 'plane', 'airplane'],
+    graduation: [
+      'graduation',
+      'commencement',
+      'bachelor',
+      'software development',
+      'achievement',
+      'recruiter',
+      'recruitment',
+      'portfolio',
+      'ceremony',
+    ],
+    predator: ['predator', 'horror', 'monster', 'alien', 'survival'],
+  };
+
+  const searchableTitles = Array.from(carouselItems).map((item) => {
+    const key = item.dataset.title;
+    const content = document.querySelector(`.content.${key}`);
+    const metaText = content?.querySelector('h4')?.textContent || '';
+    const descriptionText = content?.querySelector('p')?.textContent || '';
+    const posterAlt = item.querySelector('img')?.alt || '';
+    const aliasText = (keywordAliases[key] || []).join(' ');
+    const searchBlob = normalizeSearchTerm(`${key} ${metaText} ${descriptionText} ${posterAlt} ${aliasText}`);
+
+    return {
+      key,
+      bg: item.dataset.bg,
+      dim: item.dataset.dim || '0.6',
+      searchBlob,
+    };
+  });
+
+  function setSearchStatus(message) {
+    if (searchStatus) {
+      searchStatus.textContent = message;
+    }
+  }
+
+  function runSearch(rawQuery) {
+    const query = normalizeSearchTerm(rawQuery);
+    if (!query) {
+      setSearchStatus('');
+      return;
+    }
+
+    const exactMatch = searchableTitles.find((movie) => {
+      const aliasList = keywordAliases[movie.key] || [];
+      return aliasList.map(normalizeSearchTerm).includes(query);
+    });
+    const partialMatch =
+      exactMatch || searchableTitles.find((movie) => movie.searchBlob.includes(query));
+
+    if (!partialMatch) {
+      setSearchStatus(`No result for "${rawQuery}". Try title, genre, or keyword.`);
+      return;
+    }
+
+    changeBg(partialMatch.bg, partialMatch.key, partialMatch.dim);
+    setSearchStatus(`Showing ${partialMatch.key.replace('-', ' ')}.`);
+
+    if (partialMatch.key === 'graduation') {
+      openTrailerIfClosed();
+    }
+  }
+
   carouselItems.forEach((item) => {
     item.addEventListener('click', () => {
       const bg = item.dataset.bg;
@@ -45,4 +128,23 @@ document.addEventListener('DOMContentLoaded', () => {
       changeBg(bg, title, dim);
     });
   });
+
+  if (searchInput) {
+    searchInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        runSearch(searchInput.value);
+      }
+    });
+  }
+
+  if (searchIcon) {
+    searchIcon.addEventListener('click', () => runSearch(searchInput?.value || ''));
+    searchIcon.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        runSearch(searchInput?.value || '');
+      }
+    });
+  }
 });
