@@ -13,6 +13,18 @@ function toggleVideo() {
   trailer.classList.toggle('active');
 }
 
+function updateVolumeButton(video, button) {
+  if (!video || !button) return;
+  const icon = button.querySelector('i');
+  const isMuted = video.muted || video.volume === 0;
+  button.setAttribute('aria-label', isMuted ? 'Unmute video' : 'Mute video');
+  button.setAttribute('title', isMuted ? 'Unmute' : 'Mute');
+  if (icon) {
+    icon.className = `fa ${isMuted ? 'fa-volume-off' : 'fa-volume-up'}`;
+    icon.setAttribute('aria-hidden', 'true');
+  }
+}
+
 function openTrailerIfClosed() {
   const trailer = document.querySelector('.trailer');
   if (!trailer.classList.contains('active')) {
@@ -42,6 +54,22 @@ function normalizeSearchTerm(value) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const playButtons = document.querySelectorAll('[data-action="toggle-trailer"]');
+  const video = document.querySelector('video');
+  const volumeToggle = document.querySelector('[data-action="toggle-volume"]');
+
+  if (volumeToggle && video) {
+    updateVolumeButton(video, volumeToggle);
+    volumeToggle.addEventListener('click', () => {
+      const shouldUnmute = video.muted || video.volume === 0;
+      video.muted = !shouldUnmute;
+      if (shouldUnmute && video.volume === 0) {
+        video.volume = 1;
+      }
+      updateVolumeButton(video, volumeToggle);
+    });
+    video.addEventListener('volumechange', () => updateVolumeButton(video, volumeToggle));
+  }
+
   playButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
