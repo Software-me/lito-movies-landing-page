@@ -378,16 +378,13 @@ header {
 .trailer,
 .movie-player {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 100;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  z-index: 10000;
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(10px);
   visibility: hidden;
   opacity: 0;
   transition: 0.5s;
@@ -401,7 +398,9 @@ header {
 
 .trailer video,
 .movie-player video {
-  max-width: 900px;
+  width: min(92vw, 1100px);
+  max-height: 86vh;
+  background: #000;
   outline: none;
 }
 
