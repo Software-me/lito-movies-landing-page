@@ -27,6 +27,17 @@ function toggleTrailerVideo() {
   togglePlayer('.trailer', '.trailer video', '.movie-player', '.movie-player video');
 }
 
+function setTrailerSource(videoSrc) {
+  if (!videoSrc) return;
+  const trailerVideo = document.querySelector('.trailer video');
+  if (!trailerVideo) return;
+
+  if (trailerVideo.getAttribute('src') !== videoSrc) {
+    trailerVideo.setAttribute('src', videoSrc);
+    trailerVideo.load();
+  }
+}
+
 function toggleMovieVideo() {
   togglePlayer('.movie-player', '.movie-player video', '.trailer', '.trailer video');
 }
@@ -63,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
   trailerButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
+      setTrailerSource(button.dataset.videoSrc);
       toggleTrailerVideo();
     });
   });
