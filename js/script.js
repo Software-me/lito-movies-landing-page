@@ -1,20 +1,40 @@
-function toggleVideo() {
-  const trailer = document.querySelector('.trailer');
-  const video = document.querySelector('video');
-  if (trailer.classList.contains('active')) {
-    video.pause();
-  } else {
-    video.play().catch(() => {
-      // Autoplay can be blocked by browser settings.
-    });
+function closePlayer(modalSelector, videoSelector) {
+  const modal = document.querySelector(modalSelector);
+  const video = document.querySelector(videoSelector);
+  if (!modal || !video || !modal.classList.contains('active')) return;
+  video.pause();
+  modal.classList.remove('active');
+}
+
+function togglePlayer(modalSelector, videoSelector, siblingModalSelector, siblingVideoSelector) {
+  const modal = document.querySelector(modalSelector);
+  const video = document.querySelector(videoSelector);
+  if (!modal || !video) return;
+
+  if (modal.classList.contains('active')) {
+    closePlayer(modalSelector, videoSelector);
+    return;
   }
-  trailer.classList.toggle('active');
+
+  closePlayer(siblingModalSelector, siblingVideoSelector);
+  modal.classList.add('active');
+  video.play().catch(() => {
+    // Autoplay can be blocked by browser settings.
+  });
+}
+
+function toggleTrailerVideo() {
+  togglePlayer('.trailer', '.trailer video', '.movie-player', '.movie-player video');
+}
+
+function toggleMovieVideo() {
+  togglePlayer('.movie-player', '.movie-player video', '.trailer', '.trailer video');
 }
 
 function openTrailerIfClosed() {
   const trailer = document.querySelector('.trailer');
   if (!trailer.classList.contains('active')) {
-    toggleVideo();
+    toggleTrailerVideo();
   }
 }
 // change the background images and movie content text
@@ -39,11 +59,19 @@ function normalizeSearchTerm(value) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const playButtons = document.querySelectorAll('[data-action="toggle-trailer"]');
-  playButtons.forEach((button) => {
+  const trailerButtons = document.querySelectorAll('[data-action="toggle-trailer"]');
+  trailerButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
-      toggleVideo();
+      toggleTrailerVideo();
+    });
+  });
+
+  const movieButtons = document.querySelectorAll('[data-action="toggle-movie"]');
+  movieButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      toggleMovieVideo();
     });
   });
 

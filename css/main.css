@@ -375,7 +375,8 @@ header {
   color: var(--primary);
 }
 
-.trailer {
+.trailer,
+.movie-player {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -392,12 +393,14 @@ header {
   transition: 0.5s;
 }
 
-.trailer.active {
+.trailer.active,
+.movie-player.active {
   visibility: visible;
   opacity: 1;
 }
 
-.trailer video {
+.trailer video,
+.movie-player video {
   max-width: 900px;
   outline: none;
 }
@@ -464,7 +467,8 @@ header {
     max-width: 40px;
   }
 
-  .trailer video {
+  .trailer video,
+  .movie-player video {
     max-width: 90%;
   }
 }
