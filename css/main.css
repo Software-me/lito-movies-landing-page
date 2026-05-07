@@ -382,7 +382,8 @@ header {
   z-index: 10000;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
+  padding-bottom: 14px;
   background: rgba(0, 0, 0, 0.78);
   backdrop-filter: blur(10px);
   visibility: hidden;
@@ -399,7 +400,7 @@ header {
 .trailer video,
 .movie-player video {
   width: min(92vw, 1100px);
-  max-height: 86vh;
+  max-height: 92vh;
   background: #000;
   outline: none;
 }
