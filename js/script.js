@@ -24,6 +24,7 @@ function togglePlayer(modalSelector, videoSelector, siblingModalSelector, siblin
 }
 
 function toggleTrailerVideo() {
+  ensureNativeControls('.trailer video');
   togglePlayer('.trailer', '.trailer video', '.movie-player', '.movie-player video');
 }
 
@@ -39,7 +40,18 @@ function setTrailerSource(videoSrc) {
 }
 
 function toggleMovieVideo() {
+  ensureNativeControls('.movie-player video');
   togglePlayer('.movie-player', '.movie-player video', '.trailer', '.trailer video');
+}
+
+function ensureNativeControls(videoSelector) {
+  const video = document.querySelector(videoSelector);
+  if (!video) return;
+
+  // Keep browser-native controls enabled so mouse movement reveals them.
+  video.controls = true;
+  video.playsInline = true;
+  video.removeAttribute('controlslist');
 }
 
 function openTrailerIfClosed() {
